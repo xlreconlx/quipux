@@ -54,6 +54,7 @@ public class SpotifyService {
     public List<String> obtenerGeneros() {
         String token = obtenerToken();
 
+        //.uri("/browse/new-releases")
         Map<String, Object> response = webClient.get()
                 .uri("/recommendations/available-genre-seeds")
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)

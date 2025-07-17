@@ -9,7 +9,9 @@ import com.prueba.quipux.service.PlaylistService;
 import java.net.URI;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,12 +36,8 @@ public class PlaylistController {
     }
 
     @PostMapping
-    public ResponseEntity<Playlist> crearLista(@RequestBody Playlist playlist) {
-        Playlist creada = playlistService.crearPlaylist(playlist);
-        String encodedNombre = URLEncoder.encode(playlist.getNombre(), StandardCharsets.UTF_8);
-        return ResponseEntity
-                .created(URI.create("/lists/" + encodedNombre))
-                .body(creada);
+    public ResponseEntity<?> crearLista(@RequestBody Playlist playlist) {
+        return playlistService.crearPlaylist(playlist);
     }
 
     @GetMapping
@@ -49,12 +47,15 @@ public class PlaylistController {
 
     @GetMapping("/{nombre}")
     public ResponseEntity<Playlist> obtenerPorNombre(@PathVariable String nombre) {
-        return ResponseEntity.ok(playlistService.obtenerPorNombre(nombre));
+        Playlist playlist = playlistService.obtenerPorNombre(nombre);
+        if (playlist == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(playlist);
     }
 
     @DeleteMapping("/{nombre}")
-    public ResponseEntity<Void> eliminar(@PathVariable String nombre) {
-        playlistService.eliminarPorNombre(nombre);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<?> eliminar(@PathVariable String nombre) {
+        return playlistService.eliminarPorNombre(nombre);
     }
 }
