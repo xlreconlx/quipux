@@ -6,12 +6,7 @@ package com.prueba.quipux.controller;
 
 import com.prueba.quipux.entity.Playlist;
 import com.prueba.quipux.service.PlaylistService;
-import java.net.URI;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
